@@ -15,9 +15,8 @@
     "@astrojs/starlight": "^0.37.0",
     "@astrojs/starlight-tailwind": "^4.0.2",
     "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.16.4",
+    "astro": "^6.0.0",
     "astro-embed": "^0.9.2",
-    "astro-font": "^1.1.0",
     "marked": "^17.0.1",
     "sharp": "^0.34.5",
     "vite": "^7.2.6"
