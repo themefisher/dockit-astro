@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 import { viewTransitions } from "astro-vtbot/starlight-view-transitions";
 
 import tailwindcss from "@tailwindcss/vite";
-import config from "./src/config/config.json" assert { type: "json" };
+import config from "./src/config/config.json";
 import social from "./src/config/social.json";
 import locals from "./src/config/locals.json";
 import sidebar from "./src/config/sidebar.json";
@@ -52,7 +52,7 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [tailwindcss(),viewTransitions()],
+    plugins: /** @type {any} */ ([tailwindcss(), viewTransitions()]),
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
