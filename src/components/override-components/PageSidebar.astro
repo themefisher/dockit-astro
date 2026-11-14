@@ -45,14 +45,25 @@ import TableOfContents from "./TableOfContents.astro";
     }
     @media (min-width: 72rem) {
       .sl-container {
-        max-width: calc(
-          (
-            (
-                100vw - var(--sl-sidebar-width) - 2 * var(--sl-content-pad-x) -
-                  2 * var(--sl-sidebar-pad-x)
-              ) * 0.25 
+        width: var(
+          --dockit-right-sidebar-width,
+          min(
+            calc(var(--sl-sidebar-width) - 2 * var(--sl-sidebar-pad-x)),
+            calc(
+              (
+                  100vw - var(--sl-sidebar-width) - 2 * var(--sl-content-pad-x) -
+                    2 * var(--sl-sidebar-pad-x)
+                ) * 0.25
+            )
           )
         );
+        max-width: 100%;
+        transition: width 0.2s ease;
+      }
+
+      :global(html[data-right-sidebar-collapsed="true"]) .sl-container {
+        width: 2.5rem;
+        max-width: 2.5rem;
       }
     }
   }
