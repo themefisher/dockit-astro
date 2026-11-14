@@ -17,6 +17,18 @@ import Breadcrumb from "../Breadcrumb.astro";
   {
     Astro.locals.starlightRoute.toc && (
       <aside class="right-sidebar-container print:hidden">
+        <div
+          class="dockit-resize-handle dockit-resize-handle--right"
+          data-sidebar-resize="right"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize table of contents sidebar"
+          aria-valuemin="180"
+          aria-valuemax="420"
+          aria-valuenow="260"
+          tabindex="0"
+          title="Drag to resize sidebar (double-click to reset)"
+        ></div>
         <div class="right-sidebar">
           <slot name="right-sidebar" />
         </div>
@@ -28,6 +40,8 @@ import Breadcrumb from "../Breadcrumb.astro";
 <style>
   @layer starlight.core {
     .content-container {
+      flex: 1;
+      min-width: 0;
       width: 100%;
       overflow: hidden;
       opacity: 0;
@@ -37,6 +51,10 @@ import Breadcrumb from "../Breadcrumb.astro";
     .main-pane {
       /* isolation: isolate; */
       width: 100%;
+      min-width: 0;
+    }
+    .dockit-resize-handle--right {
+      display: none;
     }
     :global([data-has-sidebar][data-has-toc]) .main-pane {
       overflow: hidden;
@@ -51,6 +69,13 @@ import Breadcrumb from "../Breadcrumb.astro";
       .right-sidebar-container {
         order: 2;
         position: relative;
+      }
+      .dockit-resize-handle--right {
+        display: block;
+        inset-inline-start: -4px;
+      }
+      :global(html[data-right-sidebar-collapsed="true"]) .dockit-resize-handle--right {
+        display: none;
       }
 
       .right-sidebar {
@@ -77,11 +102,16 @@ import Breadcrumb from "../Breadcrumb.astro";
 </style>
 
 <script>
-  const contentContainer = document.querySelector(
-    ".content-container"
-  ) as HTMLElement;
+  function showContentContainer(): void {
+    const contentContainer = document.querySelector(
+      ".content-container"
+    ) as HTMLElement | null;
 
-  if (contentContainer) {
-    contentContainer.style.opacity = "1";
+    if (contentContainer) {
+      contentContainer.style.opacity = "1";
+    }
   }
+
+  showContentContainer();
+  document.addEventListener("astro:page-load", showContentContainer);
 </script>

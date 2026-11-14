@@ -50,3 +50,41 @@ if (theme.fonts.font_family.secondary) {
       ]}
     />
 
+<script is:inline>
+  (() => {
+    const applySavedSidebars = () => {
+      try {
+        const root = document.documentElement;
+        if (localStorage.getItem("dockit-left-sidebar-collapsed") === "true") {
+          root.dataset.leftSidebarCollapsed = "true";
+        } else {
+          delete root.dataset.leftSidebarCollapsed;
+        }
+        if (localStorage.getItem("dockit-right-sidebar-collapsed") === "true") {
+          root.dataset.rightSidebarCollapsed = "true";
+        } else {
+          delete root.dataset.rightSidebarCollapsed;
+        }
+
+        const lw = Number.parseFloat(localStorage.getItem("dockit-left-sidebar-width") || "");
+        if (Number.isFinite(lw) && lw > 0) {
+          root.style.setProperty("--dockit-left-sidebar-width", `${Math.round(Math.min(480, Math.max(200, lw)))}px`);
+        }
+
+        const rw = Number.parseFloat(localStorage.getItem("dockit-right-sidebar-width") || "");
+        if (Number.isFinite(rw) && rw > 0) {
+          root.style.setProperty("--dockit-right-sidebar-width", `${Math.round(Math.min(420, Math.max(180, rw)))}px`);
+        }
+      } catch {
+        // Ignore localStorage access errors
+      }
+    };
+
+    applySavedSidebars();
+    if (!document.__dockitSidebarSwapBound) {
+      document.__dockitSidebarSwapBound = true;
+      document.addEventListener("astro:after-swap", applySavedSidebars);
+    }
+  })();
+</script>
+
