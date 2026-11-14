@@ -1,4 +1,4 @@
-import { PAGE_TITLE_ID } from "node_modules/@astrojs/starlight/constants";
+const PAGE_TITLE_ID = "_top";
 
 
 
