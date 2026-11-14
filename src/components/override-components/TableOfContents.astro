@@ -12,7 +12,7 @@ const { toc } = Astro.locals.starlightRoute;
     >
       <nav aria-labelledby="starlight__on-this-page">
         <div class="dockit-toc-header">
-          <h2 id="starlight__on-this-page" class="uppercase flex gap-2">
+          <h2 id="starlight__on-this-page" class="uppercase">
             <svg
               width="12"
               height="12"
@@ -76,16 +76,20 @@ const { toc } = Astro.locals.starlightRoute;
       font-size: 12px !important;
       display: flex;
       align-items: center;
+      gap: 0.5rem;
       margin-bottom: 0 !important;
     }
-    :global(html[data-right-sidebar-collapsed="true"]) .dockit-toc-header {
-      padding-inline: 0;
-      justify-content: center;
-      margin-bottom: 0;
-    }
-    :global(html[data-right-sidebar-collapsed="true"]) #starlight__on-this-page,
-    :global(html[data-right-sidebar-collapsed="true"]) #starlight__toc-body {
-      display: none;
+    @media (min-width: 72rem) {
+      :global(html[data-right-sidebar-collapsed="true"]) .dockit-toc-header {
+        padding-inline: 0;
+        padding-block: 0.25rem;
+        justify-content: center;
+        margin-bottom: 0;
+      }
+      :global(html[data-right-sidebar-collapsed="true"]) #starlight__on-this-page,
+      :global(html[data-right-sidebar-collapsed="true"]) #starlight__toc-body {
+        display: none;
+      }
     }
     :global(html[data-right-sidebar-collapsed="true"]) .dockit-sidebar-toggle--right .icon-collapse {
       display: none;
