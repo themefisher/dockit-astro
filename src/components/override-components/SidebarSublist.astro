@@ -2,10 +2,15 @@
 import { Icon } from "@astrojs/starlight/components";
 import { Badge } from "@astrojs/starlight/components";
 import SidebarRestorePoint from "./SidebarRestorePoint.astro";
-import { flattenSidebar } from "node_modules/@astrojs/starlight/utils/navigation";
 import { plainLabel, getIconFromLabel } from "@/lib/utils/textConverter";
 
 const { sublist, nested } = Astro.props;
+
+function hasCurrent(entries: any[]): boolean {
+  return entries.some(
+    (entry: any) => entry.isCurrent || (entry.entries && hasCurrent(entry.entries))
+  );
+}
 ---
 
 <ul class:list={{ "top-level": !nested }}>
@@ -38,7 +43,7 @@ const { sublist, nested } = Astro.props;
         ) : (
           <details
             open={
-              flattenSidebar(entry.entries).some((i) => i.isCurrent) ||
+              hasCurrent(entry.entries) ||
               !entry.collapsed
             }
           >
@@ -51,7 +56,7 @@ const { sublist, nested } = Astro.props;
                     size="1.3rem"
                     class="mr-2.5"
                     color={
-                      flattenSidebar(entry.entries).some((i) => i.isCurrent)
+                      hasCurrent(entry.entries)
                         ? "var(--color-primary)"
                         : ""
                     }
